@@ -1,0 +1,563 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Questionnaire – Apprentissage des langues</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    /* 3 niveaux de couleur par question */
+    .q-card { transition: background-color .25s ease; }
+    .q-wrong { background: rgba(220,53,69,.12) !important; }      /* rouge doux */
+    .q-partial { background: rgba(255,193,7,.18) !important; }    /* jaune doux */
+    .q-correct { background: rgba(25,135,84,.14) !important; }    /* vert doux */
+
+    .answer-box { display:none; }
+    .q-hidden { display:none; }
+    code { user-select: all; }
+  </style>
+</head>
+
+<body class="bg-light">
+  <div class="container py-4">
+
+    <!-- Header + composant Bootstrap (alert) -->
+    <div class="d-flex align-items-center justify-content-between mb-3">
+      <h1 class="h4 mb-0">Questionnaire : apprendre les langues</h1>
+      <span class="badge text-bg-secondary">HTML / CSS / jQuery / Bootstrap</span>
+    </div>
+
+    <div class="alert alert-info">
+      Les questions apparaissent progressivement. À la fin, cliquez sur <strong>Vérifier</strong> pour afficher votre score.
+    </div>
+
+    <!-- Zone score -->
+    <div id="resultBox" class="card mb-3 d-none">
+      <div class="card-body">
+        <div class="d-flex align-items-center justify-content-between">
+          <div>
+            <div class="fw-semibold">Résultat</div>
+            <div id="scoreText" class="text-muted small">—</div>
+          </div>
+          <button id="btnReset" class="btn btn-sm btn-outline-secondary">Réinitialiser</button>
+        </div>
+
+        <div class="mt-3">
+          <!-- composant Bootstrap (progress) -->
+          <div class="progress" role="progressbar" aria-label="Score" aria-valuemin="0" aria-valuemax="100">
+            <div id="scoreBar" class="progress-bar" style="width:0%">0%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Questionnaire -->
+    <form id="quizForm" class="vstack gap-3">
+
+      <!-- Q1 (radio) -->
+      <section class="card q-card" data-qid="1" data-type="radio" data-points="1" data-correct="input">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start gap-2">
+            <div>
+              <div class="fw-semibold">Q1. À quoi sert le “spaced repetition” ?</div>
+              <div class="text-muted small">Choisissez une réponse.</div>
+            </div>
+            <button type="button" class="btn btn-sm btn-outline-primary btn-show-answer" data-answer="Améliorer la mémorisation en révisant au bon moment.">
+              Voir la bonne réponse
+            </button>
+          </div>
+
+          <div class="mt-2">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q1" value="a" id="q1a">
+              <label class="form-check-label" for="q1a">Parler plus vite</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q1" value="b" id="q1b">
+              <label class="form-check-label" for="q1b">Améliorer la mémorisation en révisant au bon moment</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q1" value="c" id="q1c">
+              <label class="form-check-label" for="q1c">Traduire mot à mot</label>
+            </div>
+          </div>
+
+          <div class="answer-box alert alert-secondary mt-3 mb-0"></div>
+        </div>
+      </section>
+
+      <!-- Q2 (texte, normalisation espaces/casse/diacritiques) -->
+      <section class="card q-card q-hidden" data-qid="2" data-type="text" data-points="1" data-correct="input" data-answers="input,entrée,comprehensible input">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start gap-2">
+            <div>
+              <div class="fw-semibold">Q2. Complétez : “Krashen parle de … compréhensible.”</div>
+              <div class="text-muted small">Réponse en un mot ou expression (ex: “input”).</div>
+            </div>
+            <button type="button" class="btn btn-sm btn-outline-primary btn-show-answer" data-answer="Réponses attendues (exemples) : input / entrée (comprehensible input).">
+              Voir la bonne réponse
+            </button>
+          </div>
+
+          <div class="mt-2">
+            <input type="text" class="form-control" name="q2" placeholder="Votre réponse…">
+          </div>
+
+          <div class="answer-box alert alert-secondary mt-3 mb-0"></div>
+        </div>
+      </section>
+
+      <!-- Q3 (checkbox, partiel possible) -->
+      <section class="card q-card q-hidden" data-qid="3" data-type="checkbox" data-points="2" data-correct="a,c,d">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start gap-2">
+            <div>
+              <div class="fw-semibold">Q3. Quelles activités développent surtout la compréhension orale ?</div>
+              <div class="text-muted small">Plusieurs réponses possibles (score partiel).</div>
+            </div>
+            <button type="button" class="btn btn-sm btn-outline-primary btn-show-answer" data-answer="a, c, d">
+              Voir la bonne réponse
+            </button>
+          </div>
+
+          <div class="mt-2">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="q3" value="a" id="q3a">
+              <label class="form-check-label" for="q3a">Écouter un podcast court</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="q3" value="b" id="q3b">
+              <label class="form-check-label" for="q3b">Écrire une dissertation</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="q3" value="c" id="q3c">
+              <label class="form-check-label" for="q3c">Regarder une vidéo avec sous-titres (puis sans)</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="q3" value="d" id="q3d">
+              <label class="form-check-label" for="q3d">Faire un exercice de compréhension orale</label>
+            </div>
+          </div>
+
+          <div class="answer-box alert alert-secondary mt-3 mb-0"></div>
+        </div>
+      </section>
+
+      <!-- Q4 (radio) -->
+      <section class="card q-card q-hidden" data-qid="4" data-type="radio" data-points="1" data-correct="b">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start gap-2">
+            <div>
+              <div class="fw-semibold">Q4. Le CECRL (A1–C2) sert principalement à…</div>
+            </div>
+            <button type="button" class="btn btn-sm btn-outline-primary btn-show-answer" data-answer="Décrire des niveaux de compétence (descripteurs) et guider l’évaluation.">
+              Voir la bonne réponse
+            </button>
+          </div>
+
+          <div class="mt-2">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q4" value="a" id="q4a">
+              <label class="form-check-label" for="q4a">Choisir une police de caractères</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q4" value="b" id="q4b">
+              <label class="form-check-label" for="q4b">Décrire des niveaux de compétence et guider l’évaluation</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q4" value="c" id="q4c">
+              <label class="form-check-label" for="q4c">Traduire automatiquement un texte</label>
+            </div>
+          </div>
+
+          <div class="answer-box alert alert-secondary mt-3 mb-0"></div>
+        </div>
+      </section>
+
+      <!-- Q5 (texte) -->
+      <section class="card q-card q-hidden" data-qid="5" data-type="text" data-points="1" data-correct="input" data-answers="input,entrée">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start gap-2">
+            <div>
+              <div class="fw-semibold">Q5. Donnez un synonyme français simple de “input” (en didactique).</div>
+              <div class="text-muted small">Ex : “entrée”.</div>
+            </div>
+            <button type="button" class="btn btn-sm btn-outline-primary btn-show-answer" data-answer="Entrée (exposition à la langue).">
+              Voir la bonne réponse
+            </button>
+          </div>
+
+          <div class="mt-2">
+            <input type="text" class="form-control" name="q5" placeholder="Votre réponse…">
+          </div>
+
+          <div class="answer-box alert alert-secondary mt-3 mb-0"></div>
+        </div>
+      </section>
+
+      <!-- Q6 (checkbox, 2 bonnes, partiel possible) -->
+      <section class="card q-card q-hidden" data-qid="6" data-type="checkbox" data-points="2" data-correct="b,d">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start gap-2">
+            <div>
+              <div class="fw-semibold">Q6. Qu’est-ce qui aide souvent la prononciation ?</div>
+              <div class="text-muted small">Plusieurs réponses possibles.</div>
+            </div>
+            <button type="button" class="btn btn-sm btn-outline-primary btn-show-answer" data-answer="b, d">
+              Voir la bonne réponse
+            </button>
+          </div>
+
+          <div class="mt-2">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="q6" value="a" id="q6a">
+              <label class="form-check-label" for="q6a">Lire uniquement des règles</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="q6" value="b" id="q6b">
+              <label class="form-check-label" for="q6b">Répétition + feedback (shadowing, imitation)</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="q6" value="c" id="q6c">
+              <label class="form-check-label" for="q6c">Traduire mot à mot</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="q6" value="d" id="q6d">
+              <label class="form-check-label" for="q6d">Enregistrer sa voix puis se réécouter</label>
+            </div>
+          </div>
+
+          <div class="answer-box alert alert-secondary mt-3 mb-0"></div>
+        </div>
+      </section>
+
+      <!-- Q7 (radio) -->
+      <section class="card q-card q-hidden" data-qid="7" data-type="radio" data-points="1" data-correct="c">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start gap-2">
+            <div>
+              <div class="fw-semibold">Q7. La “charge cognitive” trop élevée peut…</div>
+            </div>
+            <button type="button" class="btn btn-sm btn-outline-primary btn-show-answer" data-answer="Rendre l’apprentissage moins efficace (surcharge).">
+              Voir la bonne réponse
+            </button>
+          </div>
+
+          <div class="mt-2">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q7" value="a" id="q7a">
+              <label class="form-check-label" for="q7a">Accélérer la mémoire automatiquement</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q7" value="b" id="q7b">
+              <label class="form-check-label" for="q7b">Améliorer la prononciation sans effort</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q7" value="c" id="q7c">
+              <label class="form-check-label" for="q7c">Rendre l’apprentissage moins efficace</label>
+            </div>
+          </div>
+
+          <div class="answer-box alert alert-secondary mt-3 mb-0"></div>
+        </div>
+      </section>
+
+      <!-- Q8 (texte) -->
+      <section class="card q-card q-hidden" data-qid="8" data-type="text" data-points="1" data-correct="feedback" data-answers="feedback,retour,retour d'information">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start gap-2">
+            <div>
+              <div class="fw-semibold">Q8. Quel mot (anglais ou français) désigne un “retour” après une réponse ?</div>
+              <div class="text-muted small">Ex : feedback.</div>
+            </div>
+            <button type="button" class="btn btn-sm btn-outline-primary btn-show-answer" data-answer="Feedback (retour / retour d’information).">
+              Voir la bonne réponse
+            </button>
+          </div>
+
+          <div class="mt-2">
+            <input type="text" class="form-control" name="q8" placeholder="Votre réponse…">
+          </div>
+
+          <div class="answer-box alert alert-secondary mt-3 mb-0"></div>
+        </div>
+      </section>
+
+      <!-- Q9 (checkbox) -->
+      <section class="card q-card q-hidden" data-qid="9" data-type="checkbox" data-points="2" data-correct="a,b,c">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start gap-2">
+            <div>
+              <div class="fw-semibold">Q9. Quelles stratégies sont plutôt métacognitives ?</div>
+              <div class="text-muted small">Plusieurs réponses possibles.</div>
+            </div>
+            <button type="button" class="btn btn-sm btn-outline-primary btn-show-answer" data-answer="a, b, c">
+              Voir la bonne réponse
+            </button>
+          </div>
+
+          <div class="mt-2">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="q9" value="a" id="q9a">
+              <label class="form-check-label" for="q9a">Planifier sa séance</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="q9" value="b" id="q9b">
+              <label class="form-check-label" for="q9b">S’auto-évaluer</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="q9" value="c" id="q9c">
+              <label class="form-check-label" for="q9c">Se fixer un objectif</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="q9" value="d" id="q9d">
+              <label class="form-check-label" for="q9d">Copier une traduction automatique</label>
+            </div>
+          </div>
+
+          <div class="answer-box alert alert-secondary mt-3 mb-0"></div>
+        </div>
+      </section>
+
+      <!-- Q10 (radio) -->
+      <section class="card q-card q-hidden" data-qid="10" data-type="radio" data-points="1" data-correct="a">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start gap-2">
+            <div>
+              <div class="fw-semibold">Q10. Un objectif “SMART” est…</div>
+            </div>
+            <button type="button" class="btn btn-sm btn-outline-primary btn-show-answer" data-answer="Spécifique, Mesurable, Atteignable, Réaliste, Temporel.">
+              Voir la bonne réponse
+            </button>
+          </div>
+
+          <div class="mt-2">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q10" value="a" id="q10a">
+              <label class="form-check-label" for="q10a">Spécifique, Mesurable, Atteignable, Réaliste, Temporel</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q10" value="b" id="q10b">
+              <label class="form-check-label" for="q10b">Simple, Minimal, Aléatoire, Rapide, Total</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q10" value="c" id="q10c">
+              <label class="form-check-label" for="q10c">Surtout décoratif</label>
+            </div>
+          </div>
+
+          <div class="answer-box alert alert-secondary mt-3 mb-0"></div>
+        </div>
+      </section>
+
+      <!-- Bouton vérifier -->
+      <div class="d-flex justify-content-end">
+        <button id="btnCheck" type="button" class="btn btn-success">
+          Vérifier
+        </button>
+      </div>
+
+    </form>
+
+    <hr class="my-4">
+
+    <!-- Page d’explications (simple) -->
+    <div class="card">
+      <div class="card-body">
+        <h2 class="h6">À propos (structure)</h2>
+        <ul class="mb-0">
+          <li>Les questions sont dans des <code>&lt;section&gt;</code> (cartes Bootstrap).</li>
+          <li>Un événement de réponse (change/input) affiche la question suivante.</li>
+          <li><strong>Vérifier</strong> calcule le score, colore les cartes (faux/partiel/juste) et active “Voir la bonne réponse”.</li>
+          <li>Pour les réponses texte, une normalisation retire espaces, casse et diacritiques.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- jQuery + Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // ----------------------------
+    // Utils (normalisation texte)
+    // ----------------------------
+    function normalizeText(str) {
+      return String(str || '')
+        .trim()
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, ''); // diacritiques
+    }
+
+    // Score checkbox: retourne {earned, max}
+    function scoreCheckbox(selected, correctSet, maxPoints) {
+      // points partiels: proportion d’items corrects cochés, pénalité si faux cochés
+      const sel = new Set(selected);
+      const correct = new Set(correctSet);
+
+      let good = 0;
+      let bad = 0;
+
+      sel.forEach(v => (correct.has(v) ? good++ : bad++));
+      const totalCorrect = correct.size;
+
+      // base = part des bonnes cochées
+      let ratio = totalCorrect ? (good / totalCorrect) : 0;
+
+      // pénalité légère si on coche des mauvaises
+      if (bad > 0) ratio -= Math.min(0.5, bad * 0.25);
+
+      ratio = Math.max(0, Math.min(1, ratio));
+
+      return {
+        earned: Math.round(ratio * maxPoints * 100) / 100,
+        max: maxPoints
+      };
+    }
+
+    // ----------------------------
+    // Apparition progressive
+    // ----------------------------
+    function revealNext(qid) {
+      const $next = $('[data-qid="' + (qid + 1) + '"]');
+      if ($next.length) $next.removeClass('q-hidden');
+    }
+
+    function isAnswered($q) {
+      const type = $q.data('type');
+      const qid = Number($q.data('qid'));
+
+      if (type === 'text') {
+        const v = $q.find('input[type="text"]').val();
+        return normalizeText(v).length > 0;
+      }
+      if (type === 'radio') {
+        return $q.find('input[type="radio"][name="q' + qid + '"]:checked').length > 0;
+      }
+      if (type === 'checkbox') {
+        return $q.find('input[type="checkbox"][name="q' + qid + '"]:checked').length > 0;
+      }
+      return false;
+    }
+
+    // ----------------------------
+    // Correction / scoring
+    // ----------------------------
+    function gradeQuestion($q) {
+      const type = $q.data('type');
+      const qid = Number($q.data('qid'));
+      const points = Number($q.data('points') || 1);
+      const correctRaw = String($q.data('correct') || '');
+      const correctTokens = correctRaw.split(',').map(s => s.trim()).filter(Boolean);
+
+      // reset couleurs
+      $q.removeClass('q-wrong q-partial q-correct');
+
+      if (type === 'radio') {
+        const v = $q.find('input[type="radio"][name="q' + qid + '"]:checked').val();
+        const ok = v && v === correctRaw;
+        $q.addClass(ok ? 'q-correct' : 'q-wrong');
+        return { earned: ok ? points : 0, max: points };
+
+      } else if (type === 'text') {
+        const v = $q.find('input[type="text"]').val();
+        const answers = String($q.data('answers') || '').split(',').map(s => normalizeText(s));
+        const nv = normalizeText(v);
+
+        const ok = nv && answers.includes(nv);
+        $q.addClass(ok ? 'q-correct' : 'q-wrong');
+        return { earned: ok ? points : 0, max: points };
+
+      } else if (type === 'checkbox') {
+        const selected = $q.find('input[type="checkbox"][name="q' + qid + '"]:checked').map(function(){ return this.value; }).get();
+        const scored = scoreCheckbox(selected, correctTokens, points);
+
+        const ratio = scored.max ? scored.earned / scored.max : 0;
+        if (ratio >= 0.999) $q.addClass('q-correct');
+        else if (ratio > 0) $q.addClass('q-partial');
+        else $q.addClass('q-wrong');
+
+        return scored;
+      }
+
+      return { earned: 0, max: points };
+    }
+
+    // ----------------------------
+    // UI : voir réponse
+    // ----------------------------
+    function showAnswer($q, text) {
+      const $box = $q.find('.answer-box');
+      $box.text('Bonne réponse : ' + text).show();
+    }
+
+    // ----------------------------
+    // Init
+    // ----------------------------
+    $(function() {
+
+      // Apparition progressive : quand une question est répondue -> révéler la suivante
+      $('#quizForm').on('input change', 'input', function() {
+        const $q = $(this).closest('section[data-qid]');
+        const qid = Number($q.data('qid'));
+        if (isAnswered($q)) revealNext(qid);
+      });
+
+      // Boutons "voir la bonne réponse"
+      $('#quizForm').on('click', '.btn-show-answer', function() {
+        const $q = $(this).closest('section[data-qid]');
+        const ans = $(this).data('answer');
+        showAnswer($q, ans);
+      });
+
+      // Vérifier
+      $('#btnCheck').on('click', function() {
+        // afficher toutes les questions (au cas où)
+        $('section[data-qid]').removeClass('q-hidden');
+
+        let earnedTotal = 0;
+        let maxTotal = 0;
+
+        $('section[data-qid]').each(function() {
+          const $q = $(this);
+          const res = gradeQuestion($q);
+          earnedTotal += res.earned;
+          maxTotal += res.max;
+        });
+
+        // score + barre
+        const percent = maxTotal ? Math.round((earnedTotal / maxTotal) * 100) : 0;
+
+        $('#resultBox').removeClass('d-none');
+        $('#scoreText').text(`${earnedTotal} point(s) sur ${maxTotal} (${percent}%)`);
+        $('#scoreBar').css('width', percent + '%').text(percent + '%');
+        $('#scoreBar').attr('aria-valuenow', percent);
+      });
+
+      // Reset
+      $('#btnReset').on('click', function() {
+        // reset formulaire + UI
+        $('#quizForm')[0].reset();
+        $('#resultBox').addClass('d-none');
+        $('#scoreBar').css('width', '0%').text('0%');
+        $('#scoreText').text('—');
+
+        // reset couleurs + réponses
+        $('section[data-qid]').removeClass('q-wrong q-partial q-correct');
+        $('.answer-box').hide().text('');
+
+        // réaffichage progressif : seule Q1 visible
+        $('section[data-qid]').addClass('q-hidden');
+        $('[data-qid="1"]').removeClass('q-hidden');
+      });
+
+    });
+  </script>
+</body>
+</html>
