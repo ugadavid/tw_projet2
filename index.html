@@ -3,22 +3,12 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Questionnaire – Apprentissage des langues</title>
+  <title>Questionnaire - Apprentissage des langues</title>
 
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-  <style>
-    /* 3 niveaux de couleur par question */
-    .q-card { transition: background-color .25s ease; }
-    .q-wrong { background: rgba(220,53,69,.12) !important; }      /* rouge doux */
-    .q-partial { background: rgba(255,193,7,.18) !important; }    /* jaune doux */
-    .q-correct { background: rgba(25,135,84,.14) !important; }    /* vert doux */
-
-    .answer-box { display:none; }
-    .q-hidden { display:none; }
-    code { user-select: all; }
-  </style>
+  <link rel="stylesheet" href="index.css">
+  
 </head>
 
 <body class="bg-light">
@@ -27,8 +17,15 @@
     <!-- Header + composant Bootstrap (alert) -->
     <div class="d-flex align-items-center justify-content-between mb-3">
       <h1 class="h4 mb-0">Questionnaire : apprendre les langues</h1>
-      <span class="badge text-bg-secondary">HTML / CSS / jQuery / Bootstrap</span>
+
+      <div class="d-flex gap-2">
+        <span class="badge text-bg-secondary">HTML / CSS / jQuery / Bootstrap</span>
+        <button id="btnHelp" type="button" class="btn btn-sm btn-outline-secondary">
+          Explications
+        </button>
+      </div>
     </div>
+
 
     <div class="alert alert-info">
       Les questions apparaissent progressivement. À la fin, cliquez sur <strong>Vérifier</strong> pour afficher votre score.
@@ -58,11 +55,11 @@
     <form id="quizForm" class="vstack gap-3">
 
       <!-- Q1 (radio) -->
-      <section class="card q-card" data-qid="1" data-type="radio" data-points="1" data-correct="input">
+      <section class="card q-card" data-qid="1" data-type="radio" data-points="1" data-correct="b">
         <div class="card-body">
           <div class="d-flex justify-content-between align-items-start gap-2">
             <div>
-              <div class="fw-semibold">Q1. À quoi sert le “spaced repetition” ?</div>
+              <div class="fw-semibold">Q1. À quoi sert le "spaced repetition" ?</div>
               <div class="text-muted small">Choisissez une réponse.</div>
             </div>
             <button type="button" class="btn btn-sm btn-outline-primary btn-show-answer" data-answer="Améliorer la mémorisation en révisant au bon moment.">
@@ -94,8 +91,8 @@
         <div class="card-body">
           <div class="d-flex justify-content-between align-items-start gap-2">
             <div>
-              <div class="fw-semibold">Q2. Complétez : “Krashen parle de … compréhensible.”</div>
-              <div class="text-muted small">Réponse en un mot ou expression (ex: “input”).</div>
+              <div class="fw-semibold">Q2. Complétez : "Krashen parle de … compréhensible."</div>
+              <div class="text-muted small">Réponse en un mot ou expression (ex: "input").</div>
             </div>
             <button type="button" class="btn btn-sm btn-outline-primary btn-show-answer" data-answer="Réponses attendues (exemples) : input / entrée (comprehensible input).">
               Voir la bonne réponse
@@ -151,9 +148,9 @@
         <div class="card-body">
           <div class="d-flex justify-content-between align-items-start gap-2">
             <div>
-              <div class="fw-semibold">Q4. Le CECRL (A1–C2) sert principalement à…</div>
+              <div class="fw-semibold">Q4. Le CECRL (A1-C2) sert principalement à…</div>
             </div>
-            <button type="button" class="btn btn-sm btn-outline-primary btn-show-answer" data-answer="Décrire des niveaux de compétence (descripteurs) et guider l’évaluation.">
+            <button type="button" class="btn btn-sm btn-outline-primary btn-show-answer" data-answer="Décrire des niveaux de compétence (descripteurs) et guider l'évaluation.">
               Voir la bonne réponse
             </button>
           </div>
@@ -165,7 +162,7 @@
             </div>
             <div class="form-check">
               <input class="form-check-input" type="radio" name="q4" value="b" id="q4b">
-              <label class="form-check-label" for="q4b">Décrire des niveaux de compétence et guider l’évaluation</label>
+              <label class="form-check-label" for="q4b">Décrire des niveaux de compétence et guider l'évaluation</label>
             </div>
             <div class="form-check">
               <input class="form-check-input" type="radio" name="q4" value="c" id="q4c">
@@ -182,8 +179,8 @@
         <div class="card-body">
           <div class="d-flex justify-content-between align-items-start gap-2">
             <div>
-              <div class="fw-semibold">Q5. Donnez un synonyme français simple de “input” (en didactique).</div>
-              <div class="text-muted small">Ex : “entrée”.</div>
+              <div class="fw-semibold">Q5. Donnez un synonyme français simple de "input" (en didactique).</div>
+              <div class="text-muted small">Ex : "entrée".</div>
             </div>
             <button type="button" class="btn btn-sm btn-outline-primary btn-show-answer" data-answer="Entrée (exposition à la langue).">
               Voir la bonne réponse
@@ -203,7 +200,7 @@
         <div class="card-body">
           <div class="d-flex justify-content-between align-items-start gap-2">
             <div>
-              <div class="fw-semibold">Q6. Qu’est-ce qui aide souvent la prononciation ?</div>
+              <div class="fw-semibold">Q6. Qu'est-ce qui aide souvent la prononciation ?</div>
               <div class="text-muted small">Plusieurs réponses possibles.</div>
             </div>
             <button type="button" class="btn btn-sm btn-outline-primary btn-show-answer" data-answer="b, d">
@@ -239,9 +236,9 @@
         <div class="card-body">
           <div class="d-flex justify-content-between align-items-start gap-2">
             <div>
-              <div class="fw-semibold">Q7. La “charge cognitive” trop élevée peut…</div>
+              <div class="fw-semibold">Q7. La "charge cognitive" trop élevée peut…</div>
             </div>
-            <button type="button" class="btn btn-sm btn-outline-primary btn-show-answer" data-answer="Rendre l’apprentissage moins efficace (surcharge).">
+            <button type="button" class="btn btn-sm btn-outline-primary btn-show-answer" data-answer="Rendre l'apprentissage moins efficace (surcharge).">
               Voir la bonne réponse
             </button>
           </div>
@@ -257,7 +254,7 @@
             </div>
             <div class="form-check">
               <input class="form-check-input" type="radio" name="q7" value="c" id="q7c">
-              <label class="form-check-label" for="q7c">Rendre l’apprentissage moins efficace</label>
+              <label class="form-check-label" for="q7c">Rendre l'apprentissage moins efficace</label>
             </div>
           </div>
 
@@ -270,10 +267,10 @@
         <div class="card-body">
           <div class="d-flex justify-content-between align-items-start gap-2">
             <div>
-              <div class="fw-semibold">Q8. Quel mot (anglais ou français) désigne un “retour” après une réponse ?</div>
+              <div class="fw-semibold">Q8. Quel mot (anglais ou français) désigne un "retour" après une réponse ?</div>
               <div class="text-muted small">Ex : feedback.</div>
             </div>
-            <button type="button" class="btn btn-sm btn-outline-primary btn-show-answer" data-answer="Feedback (retour / retour d’information).">
+            <button type="button" class="btn btn-sm btn-outline-primary btn-show-answer" data-answer="Feedback (retour / retour d'information).">
               Voir la bonne réponse
             </button>
           </div>
@@ -306,7 +303,7 @@
             </div>
             <div class="form-check">
               <input class="form-check-input" type="checkbox" name="q9" value="b" id="q9b">
-              <label class="form-check-label" for="q9b">S’auto-évaluer</label>
+              <label class="form-check-label" for="q9b">S'auto-évaluer</label>
             </div>
             <div class="form-check">
               <input class="form-check-input" type="checkbox" name="q9" value="c" id="q9c">
@@ -327,7 +324,7 @@
         <div class="card-body">
           <div class="d-flex justify-content-between align-items-start gap-2">
             <div>
-              <div class="fw-semibold">Q10. Un objectif “SMART” est…</div>
+              <div class="fw-semibold">Q10. Un objectif "SMART" est…</div>
             </div>
             <button type="button" class="btn btn-sm btn-outline-primary btn-show-answer" data-answer="Spécifique, Mesurable, Atteignable, Réaliste, Temporel.">
               Voir la bonne réponse
@@ -364,14 +361,14 @@
 
     <hr class="my-4">
 
-    <!-- Page d’explications (simple) -->
+    <!-- Page d'explications (simple) -->
     <div class="card">
       <div class="card-body">
         <h2 class="h6">À propos (structure)</h2>
         <ul class="mb-0">
           <li>Les questions sont dans des <code>&lt;section&gt;</code> (cartes Bootstrap).</li>
           <li>Un événement de réponse (change/input) affiche la question suivante.</li>
-          <li><strong>Vérifier</strong> calcule le score, colore les cartes (faux/partiel/juste) et active “Voir la bonne réponse”.</li>
+          <li><strong>Vérifier</strong> calcule le score, colore les cartes (faux/partiel/juste) et active "Voir la bonne réponse".</li>
           <li>Pour les réponses texte, une normalisation retire espaces, casse et diacritiques.</li>
         </ul>
       </div>
@@ -379,185 +376,66 @@
 
   </div>
 
+  <div id="helpOverlay" class="help-overlay d-none" aria-hidden="true">
+    <div class="help-modal" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+      <div class="help-header">
+        <h2 id="helpTitle" class="h5 mb-0">Explications</h2>
+        <button id="btnHelpClose" type="button" class="btn-close" aria-label="Fermer"></button>
+      </div>
+
+      <div class="help-body">
+        <p class="mb-2">
+          Ce questionnaire utilise <strong>jQuery</strong> pour gérer les événements et <strong>Bootstrap</strong> pour la mise en forme.
+          Les questions apparaissent au fur et à mesure : au départ seule la Q1 est visible, et une réponse (input / change)
+          affiche la question suivante.
+        </p>
+
+        <h3 class="h6 mt-3">Fonctionnement</h3>
+        <ul class="mb-2">
+          <li><strong>Progression</strong> : dès qu'une question est "répondue", on révèle la suivante.</li>
+          <li><strong>Vérifier</strong> : calcule le score total (absolu + %), colore chaque question (faux / partiel / juste).</li>
+          <li><strong>Bonne réponse</strong> : un bouton par question affiche une aide si besoin.</li>
+        </ul>
+
+        <h3 class="h6 mt-3">Traitements</h3>
+        <ul class="mb-2">
+          <li><strong>Texte</strong> : on ignore espaces, casse et diacritiques (ex: "Entrée" = "entree").</li>
+          <li><strong>Checkbox</strong> : score partiel possible (bonnes cases cochées, pénalité légère si erreurs).</li>
+        </ul>
+
+        <h3 class="h6 mt-3">Organisation du code</h3>
+        <ul class="mb-2">
+          <li><strong>AppMain</strong> : point d'entrée, instancie les modules.</li>
+          <li><strong>UIHandlers</strong> : gère le DOM et les événements d'interface (helper de nom, reset, etc.).</li>
+          <li><strong>QuizManager</strong> : logique métier (validation, calculs, ajout/suppression de lignes).</li>
+          <li><strong>Utils</strong> : fonctions "pures" (normalisation texte, calculs score).</li>
+          <li><strong>AppConfig</strong> : constantes, sélecteurs, paramètres métier.</li>
+        </ul>
+
+        <h3 class="h6 mt-3">Limites</h3>
+        <ul class="mb-0">
+          <li>Les réponses "libres" acceptent une liste d'équivalents, mais pas toutes les formulations possibles.</li>
+          <li>Et non, <em>"Bond, James Bond"</em> n'a toujours pas sa question dédiée 😄</li>
+        </ul>
+      </div>
+
+      <div class="help-footer">
+        <button id="btnHelpOk" type="button" class="btn btn-primary">OK</button>
+      </div>
+    </div>
+  </div>
+
+
   <!-- jQuery + Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-  <script>
-    // ----------------------------
-    // Utils (normalisation texte)
-    // ----------------------------
-    function normalizeText(str) {
-      return String(str || '')
-        .trim()
-        .toLowerCase()
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, ''); // diacritiques
-    }
+  <!--script src="old_js.js"></script-->
 
-    // Score checkbox: retourne {earned, max}
-    function scoreCheckbox(selected, correctSet, maxPoints) {
-      // points partiels: proportion d’items corrects cochés, pénalité si faux cochés
-      const sel = new Set(selected);
-      const correct = new Set(correctSet);
-
-      let good = 0;
-      let bad = 0;
-
-      sel.forEach(v => (correct.has(v) ? good++ : bad++));
-      const totalCorrect = correct.size;
-
-      // base = part des bonnes cochées
-      let ratio = totalCorrect ? (good / totalCorrect) : 0;
-
-      // pénalité légère si on coche des mauvaises
-      if (bad > 0) ratio -= Math.min(0.5, bad * 0.25);
-
-      ratio = Math.max(0, Math.min(1, ratio));
-
-      return {
-        earned: Math.round(ratio * maxPoints * 100) / 100,
-        max: maxPoints
-      };
-    }
-
-    // ----------------------------
-    // Apparition progressive
-    // ----------------------------
-    function revealNext(qid) {
-      const $next = $('[data-qid="' + (qid + 1) + '"]');
-      if ($next.length) $next.removeClass('q-hidden');
-    }
-
-    function isAnswered($q) {
-      const type = $q.data('type');
-      const qid = Number($q.data('qid'));
-
-      if (type === 'text') {
-        const v = $q.find('input[type="text"]').val();
-        return normalizeText(v).length > 0;
-      }
-      if (type === 'radio') {
-        return $q.find('input[type="radio"][name="q' + qid + '"]:checked').length > 0;
-      }
-      if (type === 'checkbox') {
-        return $q.find('input[type="checkbox"][name="q' + qid + '"]:checked').length > 0;
-      }
-      return false;
-    }
-
-    // ----------------------------
-    // Correction / scoring
-    // ----------------------------
-    function gradeQuestion($q) {
-      const type = $q.data('type');
-      const qid = Number($q.data('qid'));
-      const points = Number($q.data('points') || 1);
-      const correctRaw = String($q.data('correct') || '');
-      const correctTokens = correctRaw.split(',').map(s => s.trim()).filter(Boolean);
-
-      // reset couleurs
-      $q.removeClass('q-wrong q-partial q-correct');
-
-      if (type === 'radio') {
-        const v = $q.find('input[type="radio"][name="q' + qid + '"]:checked').val();
-        const ok = v && v === correctRaw;
-        $q.addClass(ok ? 'q-correct' : 'q-wrong');
-        return { earned: ok ? points : 0, max: points };
-
-      } else if (type === 'text') {
-        const v = $q.find('input[type="text"]').val();
-        const answers = String($q.data('answers') || '').split(',').map(s => normalizeText(s));
-        const nv = normalizeText(v);
-
-        const ok = nv && answers.includes(nv);
-        $q.addClass(ok ? 'q-correct' : 'q-wrong');
-        return { earned: ok ? points : 0, max: points };
-
-      } else if (type === 'checkbox') {
-        const selected = $q.find('input[type="checkbox"][name="q' + qid + '"]:checked').map(function(){ return this.value; }).get();
-        const scored = scoreCheckbox(selected, correctTokens, points);
-
-        const ratio = scored.max ? scored.earned / scored.max : 0;
-        if (ratio >= 0.999) $q.addClass('q-correct');
-        else if (ratio > 0) $q.addClass('q-partial');
-        else $q.addClass('q-wrong');
-
-        return scored;
-      }
-
-      return { earned: 0, max: points };
-    }
-
-    // ----------------------------
-    // UI : voir réponse
-    // ----------------------------
-    function showAnswer($q, text) {
-      const $box = $q.find('.answer-box');
-      $box.text('Bonne réponse : ' + text).show();
-    }
-
-    // ----------------------------
-    // Init
-    // ----------------------------
-    $(function() {
-
-      // Apparition progressive : quand une question est répondue -> révéler la suivante
-      $('#quizForm').on('input change', 'input', function() {
-        const $q = $(this).closest('section[data-qid]');
-        const qid = Number($q.data('qid'));
-        if (isAnswered($q)) revealNext(qid);
-      });
-
-      // Boutons "voir la bonne réponse"
-      $('#quizForm').on('click', '.btn-show-answer', function() {
-        const $q = $(this).closest('section[data-qid]');
-        const ans = $(this).data('answer');
-        showAnswer($q, ans);
-      });
-
-      // Vérifier
-      $('#btnCheck').on('click', function() {
-        // afficher toutes les questions (au cas où)
-        $('section[data-qid]').removeClass('q-hidden');
-
-        let earnedTotal = 0;
-        let maxTotal = 0;
-
-        $('section[data-qid]').each(function() {
-          const $q = $(this);
-          const res = gradeQuestion($q);
-          earnedTotal += res.earned;
-          maxTotal += res.max;
-        });
-
-        // score + barre
-        const percent = maxTotal ? Math.round((earnedTotal / maxTotal) * 100) : 0;
-
-        $('#resultBox').removeClass('d-none');
-        $('#scoreText').text(`${earnedTotal} point(s) sur ${maxTotal} (${percent}%)`);
-        $('#scoreBar').css('width', percent + '%').text(percent + '%');
-        $('#scoreBar').attr('aria-valuenow', percent);
-      });
-
-      // Reset
-      $('#btnReset').on('click', function() {
-        // reset formulaire + UI
-        $('#quizForm')[0].reset();
-        $('#resultBox').addClass('d-none');
-        $('#scoreBar').css('width', '0%').text('0%');
-        $('#scoreText').text('—');
-
-        // reset couleurs + réponses
-        $('section[data-qid]').removeClass('q-wrong q-partial q-correct');
-        $('.answer-box').hide().text('');
-
-        // réaffichage progressif : seule Q1 visible
-        $('section[data-qid]').addClass('q-hidden');
-        $('[data-qid="1"]').removeClass('q-hidden');
-      });
-
-    });
-  </script>
+  <script src="App/AppConfig.js"></script>
+  <script src="App/Utils.js"></script>
+  <script src="App/UIHandlers.js"></script>
+  <script src="App/QuizManager.js"></script>
+  <script src="App/AppMain.js"></script>
 </body>
 </html>
